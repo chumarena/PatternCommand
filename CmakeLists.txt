@@ -1,0 +1,25 @@
+cmake_minimum_required(VERSION 3.10)
+project(patternCommand)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+if(MSVC)
+    add_compile_options(/utf-8)
+endif()
+
+file(GLOB_RECURSE ALL_SOURCES 
+    "sourse/*.cpp" 
+    "sourse/*.h"
+)
+
+file(GLOB_RECURSE ALL_HEADERS "sourse/*.h")
+set(INCLUDE_DIRS "")
+foreach(header_file ${ALL_HEADERS})
+    get_filename_component(header_dir ${header_file} DIRECTORY)
+    list(APPEND INCLUDE_DIRS ${header_dir})
+endforeach()
+list(REMOVE_DUPLICATES INCLUDE_DIRS)
+include_directories(${INCLUDE_DIRS})
+
+add_executable(app ${ALL_SOURCES})
